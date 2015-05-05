@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">GameSetMatch</string>
+    <string name="facebook_app_id">961925777175643</string>
+    <string name="facebook_app_name">GameSetMatchFB</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
