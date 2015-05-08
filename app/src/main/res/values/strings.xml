@@ -7,4 +7,13 @@
     <string name="app_id">961925777175643</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_drag">DragActivity</string>
+    <string-array name="matches">
+        <item>Sara</item>
+        <item>Tom</item>
+        <item>Thomas</item>
+        <item>Jerry</item>
+        <item>Samantha</item>
+        <item>Samwise</item>
+        <item>Hermione</item>
+    </string-array>
 </resources>

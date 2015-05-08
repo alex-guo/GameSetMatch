@@ -26,6 +26,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".DashboardActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".ProfileViewActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".ViewMatchesActivity"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"

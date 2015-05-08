@@ -109,9 +109,9 @@ public class MainFragment extends Fragment {
 
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstaceState){
+    public void onViewCreated(View view, Bundle savedInstanceState){
 
-        super.onViewCreated(view, savedInstaceState);
+        super.onViewCreated(view, savedInstanceState);
         final LoginButton loginButton = (LoginButton) view.findViewById((R.id.login_button));
 
         /*
@@ -155,7 +155,7 @@ public class MainFragment extends Fragment {
                         Log.d("userid", userId);
 
 
-                        Intent i = new Intent(getActivity().getApplicationContext(), DragActivity.class);
+                        Intent i = new Intent(getActivity().getApplicationContext(), DashboardActivity.class);
                         i.putExtra("currentProfile", currentProfile);
                         startActivity(i);
                         //startActivity(new Intent(getActivity(), DragActivity.class));
