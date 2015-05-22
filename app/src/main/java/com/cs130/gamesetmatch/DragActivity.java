@@ -5,10 +5,14 @@ import android.content.ClipData;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.DragEvent;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.Profile;
 import com.facebook.login.widget.ProfilePictureView;
@@ -27,6 +31,9 @@ public class DragActivity extends Activity {
 
         final ProfilePictureView mOption1 = (ProfilePictureView)findViewById(R.id.profilePic);
         final ProfilePictureView mOption2 = (ProfilePictureView)findViewById(R.id.option_2);
+        final ProfilePictureView mOption3 = (ProfilePictureView)findViewById(R.id.option_3);
+        final ProfilePictureView mOption4 = (ProfilePictureView)findViewById(R.id.option_4);
+        final ProfilePictureView mOption5 = (ProfilePictureView)findViewById(R.id.option_5);
 
         final ProfilePictureView mChoice1 = (ProfilePictureView)findViewById(R.id.choice_1);
         final ProfilePictureView mChoice2 = (ProfilePictureView)findViewById(R.id.choice_2);
@@ -57,6 +64,17 @@ public class DragActivity extends Activity {
 
             mOption1.setOnLongClickListener(new OnLongClickListen());
             mOption2.setOnLongClickListener(new OnLongClickListen());
+
+            mOption3.setOnLongClickListener(new OnLongClickListen());
+            mOption4.setOnLongClickListener(new OnLongClickListen());
+            mOption5.setOnLongClickListener(new OnLongClickListen());
+
+            mOption1.setOnClickListener(new ClickListener());
+            mOption2.setOnClickListener(new ClickListener());
+            mOption3.setOnClickListener(new ClickListener());
+            mOption4.setOnClickListener(new ClickListener());
+            mOption5.setOnClickListener(new ClickListener());
+
 
             mChoice1.setOnDragListener(new ChoiceDragListener(userID));
             mChoice2.setOnDragListener(new ChoiceDragListener(userID));
@@ -116,8 +134,10 @@ public class DragActivity extends Activity {
         @Override
         public boolean onDrag(View v, DragEvent event) {
             //handle drag events
+            View view = (View) event.getLocalState();
             switch (event.getAction()) {
                 case DragEvent.ACTION_DRAG_STARTED:
+
                     //no action necessary
                     break;
                 case DragEvent.ACTION_DRAG_ENTERED:
@@ -133,7 +153,7 @@ public class DragActivity extends Activity {
 
 
                     //handle the dragged view being dropped over a target view
-                    View view = (View) event.getLocalState();
+                    //View view = (View) event.getLocalState();
 
 
                     //stop displaying the view where it was before it was dragged
@@ -145,10 +165,16 @@ public class DragActivity extends Activity {
                     //view being dragged and dropped
                     ProfilePictureView dropped = (ProfilePictureView) view;
 
+
                     //update the text in the target view to reflect the data being dropped
                     ///ropTarget.setText(dropped.getText());
                     //dropTarget.setVisibility(View.VISIBLE);
+
                     dropTarget.setProfileId(dropped.getProfileId());
+
+                    dropTarget.setOnLongClickListener(new OnLongClickListen());
+
+
 
 
                     //make it bold to highlight the fact that an item has been dropped
@@ -157,17 +183,20 @@ public class DragActivity extends Activity {
                     //if an item has already been dropped here, there will be a tag
                     Object tag = dropTarget.getTag();
 
+
+
                     //if there is already an item here, set it back visible in its original place
                     if(tag!=null)
                     {
                         //the tag is the view id already dropped here
                         int existingID = (Integer)tag;
                         //set the original view visible again
-                        //findViewById(existingID).setVisibility(View.VISIBLE);
+                        findViewById(existingID).setVisibility(View.VISIBLE);
                     }
 
                     //set the tag in the target view to the ID of the view being dropped
                     dropTarget.setTag(dropped.getId());
+
 
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
@@ -181,4 +210,34 @@ public class DragActivity extends Activity {
         }
 
     }
+
+
+    private class ClickListener implements View.OnClickListener {
+
+
+        public void onClick(View v){
+
+
+            LayoutInflater inflater = getLayoutInflater();
+
+
+            View layout = inflater.inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toast_layout_id));
+
+
+            TextView text = (TextView) layout.findViewById(R.id.text);
+            text.setText("This is a Custom Toast Message");
+
+            ProfilePictureView pic = (ProfilePictureView) layout.findViewById(R.id.toastPic);
+            pic.setProfileId("10152998692153003");
+
+
+            Toast toast = new Toast(getApplicationContext());
+            toast.setGravity(Gravity.CENTER_VERTICAL, 0,0);
+            toast.setDuration(Toast.LENGTH_LONG);
+            toast.setView(layout);
+            //Toast toast = Toast.makeText(getApplicationContext(), "Hello!", Toast.LENGTH_SHORT);
+            toast.show();
+            }
+    }
+
 }
