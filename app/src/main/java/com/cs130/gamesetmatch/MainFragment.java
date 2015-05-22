@@ -38,8 +38,6 @@ import org.w3c.dom.Text;
  */
 public class MainFragment extends Fragment {
 
-
-
     private CallbackManager mCallbackManager;
     private AccessTokenTracker mTokenTracker;
     private ProfileTracker mProfileTracker;

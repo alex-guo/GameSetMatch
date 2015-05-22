@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:facebook="http://schemas.android.com/apk/lib/com.cs130.gamesetmatch"
+    android:id="@+id/toast_layout_id"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#000"
+    android:orientation="horizontal"
+    android:padding="5dp">
+
+    <com.facebook.login.widget.ProfilePictureView
+        android:id="@+id/toastPic"
+        android:layout_height="@dimen/com_facebook_profilepictureview_preset_size_large"
+        android:layout_width="@dimen/com_facebook_profilepictureview_preset_size_large"
+        facebook:com_facebook_preset_size="large" />
+
+    <TextView
+    android:id="@+id/text"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:textColor="#FFF"/>
+
+
+</LinearLayout>
