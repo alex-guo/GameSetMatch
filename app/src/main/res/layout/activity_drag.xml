@@ -45,6 +45,8 @@
             android:layout_width="@dimen/com_facebook_profilepictureview_preset_size_small"
             facebook:com_facebook_preset_size="large" />
 
+
+
     </LinearLayout>
 
     <com.facebook.login.widget.ProfilePictureView
@@ -104,5 +106,13 @@
         android:layout_marginBottom="30dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"/>
-
+    <TextView
+        android:id="@+id/TextView01"
+        android:layout_width="match_parent"
+        android:layout_height="87dp"
+        android:text="Placeholder"
+        android:layout_below="@+id/choice_4"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+    </TextView>
 </RelativeLayout>
