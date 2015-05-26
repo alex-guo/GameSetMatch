@@ -10,13 +10,45 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainFragment">
 
+    <ImageView
+        android:id="@+id/ivProfileBg"
+        android:src="@drawable/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="71dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:layout_marginBottom="30dp"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:typeface="sans"
+        android:longClickable="false"
+        android:background="#76ccc8"
+        android:layout_below="@+id/ivProfileBg"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="62dp"/>
+<!--
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LOGIN"
+        android:id="@+id/login_button"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:typeface="sans"
+        android:longClickable="false"
+        android:background="#76ccc8"
+        android:width="200dp"
+        android:textSize="32px"
+        android:layout_below="@+id/ivProfileBg"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="62dp" />
 
+-->
 </RelativeLayout>
