@@ -68,6 +68,7 @@
         android:textSize="18dp"/>
     <Button
         android:id="@+id/logout_button"
+
         android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_marginBottom="20dp"
@@ -78,4 +79,16 @@
         android:textSize="18dp"
         android:layout_gravity="center_horizontal"
         android:width="200dp" />
+
+
+    <TextView
+        android:id="@+id/TextView01"
+        android:layout_width="match_parent"
+        android:layout_height="87dp"
+        android:text="Placeholder"
+        android:layout_below="@+id/choice_4"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+    </TextView>
+
 </LinearLayout>

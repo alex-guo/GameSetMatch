@@ -2,12 +2,16 @@ package com.cs130.gamesetmatch;
 
 import android.content.ClipData;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.Image;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
@@ -31,6 +35,9 @@ import com.facebook.login.widget.LoginButton;
 import com.facebook.login.widget.ProfilePictureView;
 
 import org.w3c.dom.Text;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 
 /**
@@ -73,6 +80,7 @@ public class MainFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
+
 
         mCallbackManager=CallbackManager.Factory.create();
         setupTokenTracker();

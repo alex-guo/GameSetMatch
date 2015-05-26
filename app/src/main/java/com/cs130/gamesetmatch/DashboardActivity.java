@@ -2,7 +2,9 @@ package com.cs130.gamesetmatch;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -11,14 +13,35 @@ import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.widget.ProfilePictureView;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Alex on 5/7/2015.
  */
 public class DashboardActivity extends Activity {
+    private TextView textView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
+        textView = (TextView) findViewById(R.id.TextView01);
+        ConnectionTask task  = new ConnectionTask();
+        task.execute(new String[]{"http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com"});
 
         final Profile currentProfile;
 
@@ -72,4 +95,65 @@ public class DashboardActivity extends Activity {
         }
 
     }
+
+
+    private class ConnectionTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String...urls){
+
+            //create HTTP client
+            DefaultHttpClient httpClient = new DefaultHttpClient();
+
+            String link = "http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com";
+
+            //create HTTP post
+            HttpPost httpPostReq = new HttpPost(link);
+
+            try {
+                // Add your data
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(4);
+                nameValuePairs.add(new BasicNameValuePair("action", "common.reg"));
+                nameValuePairs.add(new BasicNameValuePair("name", "asdf"));
+                nameValuePairs.add(new BasicNameValuePair("email", "asdf@gmail.com"));
+                nameValuePairs.add(new BasicNameValuePair("password", "password"));
+                httpPostReq.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                Log.d("URL", httpPostReq.toString());
+                // Execute HTTP Post Request
+                //HttpResponse response = httpclient.execute(httppost);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+            }
+
+
+            try{
+                HttpResponse httpResponse = httpClient.execute(httpPostReq);
+                String str = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
+                Log.d("str", str);
+
+
+                return str;
+            } catch (ClientProtocolException e){
+                e.printStackTrace();
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+            return "failure";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            try{
+                JSONObject json = new JSONObject(result);
+
+                //textView.setText(json.getString("user_id"));
+                textView.setText(json.getString("session_key"));
+
+
+            } catch (JSONException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
 }
