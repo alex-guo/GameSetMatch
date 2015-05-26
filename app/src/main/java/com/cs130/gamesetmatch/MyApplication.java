@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -20,20 +21,17 @@ public class MyApplication extends Application {
         printHashKey();
     }
     public void printHashKey() {
-        //get keyHash for Facebook
         try {
-            PackageInfo info = getPackageManager().getPackageInfo(
-                    "com.example.cs130.gamesetmatch",
-                    PackageManager.GET_SIGNATURES);
+            PackageInfo info = getPackageManager().getPackageInfo("com.package.mypackage",         PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());
-                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+                String sign=Base64.encodeToString(md.digest(), Base64.DEFAULT);
+                Log.e("MY KEY HASH:", sign);
+                Toast.makeText(getApplicationContext(), sign, Toast.LENGTH_LONG).show();
             }
         } catch (PackageManager.NameNotFoundException e) {
-
         } catch (NoSuchAlgorithmException e) {
-
         }
 
     }//end key hash

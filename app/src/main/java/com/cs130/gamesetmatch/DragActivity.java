@@ -48,7 +48,6 @@ import java.util.regex.Pattern;
 
 public class DragActivity extends Activity {
     private TextView textView;
-    JSONObject json = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -317,9 +316,7 @@ public class DragActivity extends Activity {
     private class ConnectionTask extends AsyncTask<String, Void, String>{
         @Override
         protected String doInBackground(String...urls){
-            JSONObject json = new JSONObject();
-            String response = "";
-            //connect to server
+
             //create HTTP client
             DefaultHttpClient httpClient = new DefaultHttpClient();
 
