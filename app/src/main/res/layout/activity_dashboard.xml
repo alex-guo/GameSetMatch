@@ -2,42 +2,80 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:facebook="http://schemas.android.com/apk/lib/com.cs130.gamesetmatch"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:gravity="center_vertical">
     <com.facebook.login.widget.ProfilePictureView
         android:id="@+id/profilePic"
         android:layout_centerInParent="true"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         facebook:com_facebook_preset_size="large"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="25dp" />
     <TextView
         android:id="@+id/text_details"
         android:layout_width="match_parent"
         android:gravity="center"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/profilePic" />
+        android:layout_below="@+id/profilePic"
+        android:layout_marginBottom="25dp"
+        android:textStyle="italic"
+        android:text="Hey you!"
+        android:textSize="18dp"
+        android:textAllCaps="false"
+        android:typeface="serif" />
+
     <Button
         android:id="@+id/play_game_button"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:text="Play a game!"/>
+        android:text="PLAY A GAME"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="20dp"
+        android:background="#e4cb54"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:textSize="18dp" />
     <Button
         android:id="@+id/matches_button"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="20dp"
         android:layout_gravity="center"
-        android:text="See matches"/>
+        android:text="See matches"
+        android:background="#d06b75"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:textSize="18dp"/>
     <Button
         android:id="@+id/profile_button"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="30dp"
         android:layout_gravity="center"
-        android:text="See/Edit Profile"/>
+        android:text="See/Edit Profile"
+        android:background="#8cc57f"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:textSize="18dp"/>
     <Button
         android:id="@+id/logout_button"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:text="Logout"/>
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginBottom="20dp"
+        android:text="Logout"
+        android:background="#76ccc8"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:textSize="18dp"
+        android:layout_gravity="center_horizontal"
+        android:width="200dp" />
 </LinearLayout>
