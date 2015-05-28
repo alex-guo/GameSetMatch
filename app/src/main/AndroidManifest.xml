@@ -6,6 +6,13 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <android:uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <android:uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
 
     <application
         android:name=".MyApplication"
@@ -26,12 +33,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DashboardActivity"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".ProfileViewActivity"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".ViewMatchesActivity"
-            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".DashboardActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ProfileViewActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ViewMatchesActivity"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -40,6 +50,10 @@
         <activity
             android:name=".DragActivity"
             android:label="@string/title_activity_drag" >
+        </activity>
+        <activity
+            android:name=".WaitGameActivity"
+            android:label="@string/title_activity_wait_game" >
         </activity>
     </application>
 

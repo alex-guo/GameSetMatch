@@ -16,4 +16,7 @@
         <item>Samwise</item>
         <item>Hermione</item>
     </string-array>
+    <string name="title_activity_wait_game">WaitGameActivity</string>
+
+    <string name="play_game">PLAY GAME!</string>
 </resources>
