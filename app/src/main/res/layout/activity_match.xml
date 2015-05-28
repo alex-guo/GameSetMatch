@@ -1,0 +1,87 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:facebook="http://schemas.android.com/apk/lib/com.cs130.gamesetmatch"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.cs130.gamesetmatch.MatchActivity"
+    android:background="#fff">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center_vertical|center_horizontal"
+        android:background="#fff">
+
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="-10dp"
+            android:src="@drawable/crown" />
+
+        <com.facebook.login.widget.ProfilePictureView
+            android:id="@+id/profilePic"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            facebook:com_facebook_preset_size="large"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="25dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView2"
+            android:src="@drawable/meetyourmatch"
+            android:layout_marginTop="-30dp" />
+        <TextView
+            android:id="@+id/match_name"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-20dp"
+            android:layout_marginBottom="25dp"
+            android:textStyle="italic"
+            android:text="John Doe!"
+            android:textSize="18dp"
+            android:textAllCaps="false"
+            android:typeface="serif" />
+        <Button
+            android:id="@+id/chat_button"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:text="SEND A MESSAGE"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="20dp"
+            android:background="#e4cb54"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:textSize="18dp" />
+        <Button
+            android:id="@+id/backToDash_button"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:text="BACK TO DASHBOARD"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="20dp"
+            android:background="#78ccc3"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+</RelativeLayout>
