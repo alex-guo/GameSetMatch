@@ -79,6 +79,7 @@ public class DragActivity extends Activity {
         setContentView(R.layout.activity_drag);
 
 
+        /*
         new CountDownTimer(10000, 1) {
             public void onTick(long millisUntilFinished) {
 
@@ -94,6 +95,8 @@ public class DragActivity extends Activity {
                 startActivity(intent);
             }
         }.start();
+
+        */
 
         textView = (TextView) findViewById(R.id.TextView01);
 
