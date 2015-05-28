@@ -49,70 +49,52 @@ import java.util.regex.Pattern;
 public class DragActivity extends Activity {
     private TextView textView;
 
+    private String session_key = null;
+    private String user_id = null;
+
+    private ProfilePictureView mOption1;
+    private ProfilePictureView mOption2;
+    private ProfilePictureView mOption3;
+    private ProfilePictureView mOption4;
+    private ProfilePictureView mOption5;
+
+    private ProfilePictureView mChoice1;
+    private ProfilePictureView mChoice2;
+    private ProfilePictureView mChoice3;
+    private ProfilePictureView mChoice4;
+    private ProfilePictureView mChoice5;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drag);
 
         textView = (TextView) findViewById(R.id.TextView01);
+
+        final TextView mTextDetails = (TextView) findViewById(R.id.text_details);
+
+        mOption1 = (ProfilePictureView)findViewById(R.id.option_1);
+        mOption2 = (ProfilePictureView)findViewById(R.id.option_2);
+        mOption3 = (ProfilePictureView)findViewById(R.id.option_3);
+        mOption4 = (ProfilePictureView)findViewById(R.id.option_4);
+        mOption5 = (ProfilePictureView)findViewById(R.id.option_5);
+
+        mChoice1 = (ProfilePictureView)findViewById(R.id.choice_1);
+        mChoice2 = (ProfilePictureView)findViewById(R.id.choice_2);
+        mChoice3 = (ProfilePictureView)findViewById(R.id.choice_3);
+        mChoice4 = (ProfilePictureView)findViewById(R.id.choice_4);
+        mChoice5 = (ProfilePictureView)findViewById(R.id.choice_5);
+
+        //get other users through startGame
         ConnectionTask task  = new ConnectionTask();
         task.execute(new String[] {"http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com"});
 
 
-        /*
-        //get 5 users information
-        try{
-            JSONObject jsonobj = new JSONObject();
-            jsonobj.put("action", "common.reg");
-            jsonobj.put("name", "asdf");
-            jsonobj.put("email", "asdf@gmail.com");
-            jsonobj.put("password", "password");
+        //get other users through getProfile
+        ConnectionTask2 task2  = new ConnectionTask2();
+        task2.execute(new String[] {"http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com"});
 
-            StringEntity se = new StringEntity(jsonobj.toString());
-            se.setContentType("application/json;charset=UTF-8");
-            se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json;charset=UTF-8"));
-            httpPostReq.setEntity(se);
-
-
-        } catch (JSONException e){
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e){
-            e.printStackTrace();
-        }
-
-
-        try{
-            httpClient.execute(httpPostReq);
-
-            HttpResponse httpresponse = httpClient.execute(httpPostReq);
-            String responseText = EntityUtils.toString(httpresponse.getEntity());
-            Log.d("responseTest", responseText);
-
-        } catch (ClientProtocolException e){
-            e.printStackTrace();
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-        */
-
-
-
-
-
-        final ProfilePictureView profilePictureView = (ProfilePictureView) findViewById(R.id.profilePic);
-        final TextView mTextDetails = (TextView) findViewById(R.id.text_details);
-
-        final ProfilePictureView mOption1 = (ProfilePictureView)findViewById(R.id.profilePic);
-        final ProfilePictureView mOption2 = (ProfilePictureView)findViewById(R.id.option_2);
-        final ProfilePictureView mOption3 = (ProfilePictureView)findViewById(R.id.option_3);
-        final ProfilePictureView mOption4 = (ProfilePictureView)findViewById(R.id.option_4);
-        final ProfilePictureView mOption5 = (ProfilePictureView)findViewById(R.id.option_5);
-
-        final ProfilePictureView mChoice1 = (ProfilePictureView)findViewById(R.id.choice_1);
-        final ProfilePictureView mChoice2 = (ProfilePictureView)findViewById(R.id.choice_2);
-        final ProfilePictureView mChoice3 = (ProfilePictureView)findViewById(R.id.choice_3);
-        final ProfilePictureView mChoice4 = (ProfilePictureView)findViewById(R.id.choice_4);
-        final ProfilePictureView mChoice5 = (ProfilePictureView)findViewById(R.id.choice_5);
 
         mOption1.setPresetSize(ProfilePictureView.SMALL);
         mOption2.setPresetSize(mOption2.SMALL);
@@ -126,18 +108,22 @@ public class DragActivity extends Activity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             Profile currentProfile = (Profile) extras.get("currentProfile");
-            profilePictureView.setProfileId(currentProfile.getId());
+            user_id = (String) extras.get("user_id");
+            session_key = (String) extras.get("session_key");
 
             String userID=currentProfile.getId();
 
             mTextDetails.setText("Welcome " + currentProfile.getFirstName());
 
+            mOption1.setProfileId(currentProfile.getId());
             mOption2.setProfileId("10152998692153003");
+            mOption3.setProfileId("10152998692153003");
+            mOption4.setProfileId("10152998692153003");
+            mOption5.setProfileId("10152998692153003");
 
 
             mOption1.setOnLongClickListener(new OnLongClickListen());
             mOption2.setOnLongClickListener(new OnLongClickListen());
-
             mOption3.setOnLongClickListener(new OnLongClickListen());
             mOption4.setOnLongClickListener(new OnLongClickListen());
             mOption5.setOnLongClickListener(new OnLongClickListen());
@@ -154,6 +140,7 @@ public class DragActivity extends Activity {
             mChoice3.setOnDragListener(new ChoiceDragListener(userID));
             mChoice4.setOnDragListener(new ChoiceDragListener(userID));
             mChoice5.setOnDragListener(new ChoiceDragListener(userID));
+
 
         }
 
@@ -201,6 +188,7 @@ public class DragActivity extends Activity {
 
     private class ChoiceDragListener implements View.OnDragListener {
         String userId;
+        public ChoiceDragListener(){}
         public ChoiceDragListener(String userId){
             this.userId=userId;
         }
@@ -210,6 +198,18 @@ public class DragActivity extends Activity {
             View view = (View) event.getLocalState();
             switch (event.getAction()) {
                 case DragEvent.ACTION_DRAG_STARTED:
+
+                    ProfilePictureView behind = (ProfilePictureView) v;
+                    ProfilePictureView drag = (ProfilePictureView) view;
+
+                    int tag2 = behind.getId();
+                    Log.d("tag2", String.valueOf(tag2));
+                    if (String.valueOf(tag2).equals(String.valueOf(mChoice1.getTag()))){
+                        v.setVisibility(View.VISIBLE);
+                    }
+
+
+
 
                     //no action necessary
                     break;
@@ -243,10 +243,10 @@ public class DragActivity extends Activity {
                     ///ropTarget.setText(dropped.getText());
                     //dropTarget.setVisibility(View.VISIBLE);
 
+
                     dropTarget.setProfileId(dropped.getProfileId());
 
                     dropTarget.setOnLongClickListener(new OnLongClickListen());
-
 
 
 
@@ -313,6 +313,7 @@ public class DragActivity extends Activity {
             }
     }
 
+    //calling common.getProfile to get other users' information
     private class ConnectionTask extends AsyncTask<String, Void, String>{
         @Override
         protected String doInBackground(String...urls){
@@ -327,11 +328,10 @@ public class DragActivity extends Activity {
 
             try {
                 // Add your data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(4);
-                nameValuePairs.add(new BasicNameValuePair("action", "common.reg"));
-                nameValuePairs.add(new BasicNameValuePair("name", "asdf"));
-                nameValuePairs.add(new BasicNameValuePair("email", "asdf@gmail.com"));
-                nameValuePairs.add(new BasicNameValuePair("password", "password"));
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
+                nameValuePairs.add(new BasicNameValuePair("action", "common.getProfile"));
+                nameValuePairs.add(new BasicNameValuePair("user_id", user_id));
+                nameValuePairs.add(new BasicNameValuePair("session_key", session_key));
                 httpPostReq.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                 Log.d("URL", httpPostReq.toString());
                 // Execute HTTP Post Request
@@ -361,13 +361,78 @@ public class DragActivity extends Activity {
 
              try{
                  JSONObject json = new JSONObject(result);
-                 json.getString("user_id");
-
-                 textView.setText(json.getString("user_id"));
+                 textView.setText(json.getString("playerList"));
 
              } catch (JSONException e){
                  e.printStackTrace();
              }
+        }
+    }
+
+
+
+    //calling common.getProfile to get other users' information
+    private class ConnectionTask2 extends AsyncTask<String, Void, String>{
+
+        String other_user_id;
+        public ConnectionTask2(){
+
+        }
+        public ConnectionTask2(String user_id){
+            other_user_id = user_id;
+        }
+        @Override
+        protected String doInBackground(String...urls){
+
+            //create HTTP client
+            DefaultHttpClient httpClient = new DefaultHttpClient();
+
+            String link = "http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com";
+
+            //create HTTP post
+            HttpPost httpPostReq = new HttpPost(link);
+
+            try {
+                // Add your data
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
+                nameValuePairs.add(new BasicNameValuePair("action", "game.startGame"));
+                nameValuePairs.add(new BasicNameValuePair("user_id", other_user_id));
+                nameValuePairs.add(new BasicNameValuePair("session_key", session_key));
+                httpPostReq.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                Log.d("URL", httpPostReq.toString());
+                // Execute HTTP Post Request
+                //HttpResponse response = httpclient.execute(httppost);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+            }
+
+
+            try{
+                HttpResponse httpResponse = httpClient.execute(httpPostReq);
+                String str = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
+                Log.d("str", str);
+
+
+                return str;
+            } catch (ClientProtocolException e){
+                e.printStackTrace();
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+            return "failure";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            try{
+                JSONObject json = new JSONObject(result);
+                textView.setText(json.getString("playerList"));
+                json.getString("gameId");
+
+            } catch (JSONException e){
+                e.printStackTrace();
+            }
         }
     }
 
