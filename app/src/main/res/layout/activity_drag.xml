@@ -13,7 +13,8 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_below="@+id/choice_4">
+        android:layout_below="@+id/choice_4"
+        android:id="@+id/linearLayout">
 
         <com.facebook.login.widget.ProfilePictureView
             android:id="@+id/option_1"
