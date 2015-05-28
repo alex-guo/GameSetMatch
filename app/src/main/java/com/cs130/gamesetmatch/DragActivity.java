@@ -2,7 +2,9 @@ package com.cs130.gamesetmatch;
 
 import android.app.Activity;
 import android.content.ClipData;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -51,6 +53,7 @@ public class DragActivity extends Activity {
 
     private String session_key = null;
     private String user_id = null;
+    private Profile currentProfile;
 
 
     private ProfilePictureView mOption1;
@@ -65,6 +68,8 @@ public class DragActivity extends Activity {
     private ProfilePictureView mChoice4;
     private ProfilePictureView mChoice5;
 
+    private String[] otherUsers = new String[5];
+
     private String[] server =  new String[] {"http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com"};
 
 
@@ -72,6 +77,23 @@ public class DragActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drag);
+
+
+        new CountDownTimer(10000, 1) {
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            public void onFinish() {
+                // Here do what you like...
+                Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+                intent.putExtra("session_key", session_key);
+                intent.putExtra("user_id", user_id);
+                intent.putExtra("currentProfile", currentProfile);
+
+                startActivity(intent);
+            }
+        }.start();
 
         textView = (TextView) findViewById(R.id.TextView01);
 
@@ -90,25 +112,6 @@ public class DragActivity extends Activity {
         mChoice5 = (ProfilePictureView)findViewById(R.id.choice_5);
 
 
-        //get other users through startGame
-        ConnectionTask task  = new ConnectionTask();
-        task.execute(server);
-
-
-        //get other users through getProfile
-        ConnectionTask2 task2  = new ConnectionTask2();
-        task2.execute(server);
-
-        final ProfilePictureView profilePictureView = (ProfilePictureView) findViewById(R.id.option_1);
-
-        mOption1 = (ProfilePictureView)findViewById(R.id.option_1);
-        mOption2 = (ProfilePictureView)findViewById(R.id.option_2);
-        mOption3 = (ProfilePictureView)findViewById(R.id.option_3);
-        mOption4 = (ProfilePictureView)findViewById(R.id.option_4);
-        mOption5 = (ProfilePictureView)findViewById(R.id.option_5);
-
-
-
         mOption1.setPresetSize(ProfilePictureView.SMALL);
         mOption2.setPresetSize(ProfilePictureView.SMALL);
 
@@ -120,12 +123,20 @@ public class DragActivity extends Activity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            Profile currentProfile = (Profile) extras.get("currentProfile");
+            currentProfile = (Profile) extras.get("currentProfile");
             user_id = (String) extras.get("user_id");
             session_key = (String) extras.get("session_key");
 
+            //get other users through startGame
+            StartGameConnectionTask startGameConnectionTask  = new StartGameConnectionTask();
+            startGameConnectionTask.execute(server);
 
-            profilePictureView.setProfileId(currentProfile.getId());
+
+            //go through array of users
+            //get other users through getProfile and set information
+            //pass in array of information to ClickListener
+            GetProfileTask getProfileTask  = new GetProfileTask();
+            getProfileTask.execute(server);
 
             String userID=currentProfile.getId();
 
@@ -330,8 +341,8 @@ public class DragActivity extends Activity {
     }
 
 
-    //calling common.getProfile to get other users' information
-    private class ConnectionTask extends AsyncTask<String, Void, String>{
+    //calling game.startGame to get other users' names
+    private class StartGameConnectionTask extends AsyncTask<String, Void, String>{
         @Override
         protected String doInBackground(String...urls){
 
@@ -347,7 +358,7 @@ public class DragActivity extends Activity {
                 // Add your data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(3);
 
-                nameValuePairs.add(new BasicNameValuePair("action", "common.getProfile"));
+                nameValuePairs.add(new BasicNameValuePair("action", "game.startGame"));
                 nameValuePairs.add(new BasicNameValuePair("user_id", user_id));
                 nameValuePairs.add(new BasicNameValuePair("session_key", session_key));
                 httpPostReq.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -362,7 +373,7 @@ public class DragActivity extends Activity {
             try{
                 HttpResponse httpResponse = httpClient.execute(httpPostReq);
                 String str = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
-                Log.d("str", str);
+                Log.d("strStartGameTask", str);
 
 
                 return str;
@@ -378,6 +389,7 @@ public class DragActivity extends Activity {
              try{
                  JSONObject json = new JSONObject(result);
                  //textView.setText(json.getString("playerList"));
+
                  textView.setText("onPostExecute");
 
              } catch (JSONException e){
@@ -389,13 +401,13 @@ public class DragActivity extends Activity {
 
 
     //calling common.getProfile to get other users' information
-    private class ConnectionTask2 extends AsyncTask<String, Void, String>{
+    private class GetProfileTask extends AsyncTask<String, Void, String>{
 
         String other_user_id;
-        public ConnectionTask2(){
+        public GetProfileTask(){
 
         }
-        public ConnectionTask2(String user_id){
+        public GetProfileTask(String user_id){
             other_user_id = user_id;
         }
         @Override
@@ -427,7 +439,7 @@ public class DragActivity extends Activity {
             try{
                 HttpResponse httpResponse = httpClient.execute(httpPostReq);
                 String str = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
-                Log.d("str", str);
+                Log.d("strGetProfileTask", str);
 
 
                 return str;

@@ -137,6 +137,8 @@ public class DashboardActivity extends Activity {
                 nameValuePairs.add(new BasicNameValuePair("name", name));
                 nameValuePairs.add(new BasicNameValuePair("email", email));
                 nameValuePairs.add(new BasicNameValuePair("password", password));
+                nameValuePairs.add(new BasicNameValuePair("token", token));
+
                 httpPostReq.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                 Log.d("URL", httpPostReq.toString());
                 // Execute HTTP Post Request
@@ -149,7 +151,7 @@ public class DashboardActivity extends Activity {
             try{
                 HttpResponse httpResponse = httpClient.execute(httpPostReq);
                 String str = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
-                Log.d("str", str);
+                Log.d("strConnection", str);
 
 
                 return str;
