@@ -38,6 +38,8 @@ public class WaitGameActivity extends ActionBarActivity {
     String user_id;
     Profile currentProfile;
 
+    private String[] server = new String[]{"http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +61,7 @@ public class WaitGameActivity extends ActionBarActivity {
             textView2.setText(user_id);
 
             ConnectionTask task  = new ConnectionTask();
-            task.execute(new String[]{"http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com"});
+            task.execute(server);
 
         }
 
@@ -116,7 +118,7 @@ public class WaitGameActivity extends ActionBarActivity {
 
             try {
                 // Add your data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
+                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
                 nameValuePairs.add(new BasicNameValuePair("action", "game.registerGame"));
                 nameValuePairs.add(new BasicNameValuePair("user_id", user_id));
                 nameValuePairs.add(new BasicNameValuePair("session_key", session_key));
@@ -132,12 +134,10 @@ public class WaitGameActivity extends ActionBarActivity {
             try{
                 HttpResponse httpResponse = httpClient.execute(httpPostReq);
                 String str = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
-                Log.d("str", str);
+                Log.d("strWaitGame", str);
 
 
                 return str;
-            } catch (ClientProtocolException e){
-                e.printStackTrace();
             } catch (IOException e){
                 e.printStackTrace();
             }
@@ -180,7 +180,7 @@ public class WaitGameActivity extends ActionBarActivity {
 
             try {
                 // Add your data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
+                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
                 nameValuePairs.add(new BasicNameValuePair("action", "game.startGame"));
                 nameValuePairs.add(new BasicNameValuePair("user_id", user_id));
                 nameValuePairs.add(new BasicNameValuePair("session_key", session_key));
@@ -200,8 +200,6 @@ public class WaitGameActivity extends ActionBarActivity {
 
 
                 return str;
-            } catch (ClientProtocolException e){
-                e.printStackTrace();
             } catch (IOException e){
                 e.printStackTrace();
             }
