@@ -16,7 +16,7 @@
         android:layout_below="@+id/choice_4">
 
         <com.facebook.login.widget.ProfilePictureView
-            android:id="@+id/profilePic"
+            android:id="@+id/option_1"
             android:layout_height="@dimen/com_facebook_profilepictureview_preset_size_small"
             android:layout_width="@dimen/com_facebook_profilepictureview_preset_size_small"
             facebook:com_facebook_preset_size="large" />

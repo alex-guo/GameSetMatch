@@ -48,6 +48,17 @@ import java.util.regex.Pattern;
 
 public class DragActivity extends Activity {
     private TextView textView;
+    private String[] server = new String[]{"http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com"};
+
+    //variables passed from bundle
+    private String user_id, session_key;
+
+    private ProfilePictureView mOption1;
+    private ProfilePictureView mOption2;
+    private ProfilePictureView mOption3;
+    private ProfilePictureView mOption4;
+    private ProfilePictureView mOption5;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,58 +66,20 @@ public class DragActivity extends Activity {
         setContentView(R.layout.activity_drag);
 
         textView = (TextView) findViewById(R.id.TextView01);
+
+        //get 5 user names
         ConnectionTask task  = new ConnectionTask();
-        task.execute(new String[] {"http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com"});
+        task.execute(server);
 
 
-        /*
-        //get 5 users information
-        try{
-            JSONObject jsonobj = new JSONObject();
-            jsonobj.put("action", "common.reg");
-            jsonobj.put("name", "asdf");
-            jsonobj.put("email", "asdf@gmail.com");
-            jsonobj.put("password", "password");
-
-            StringEntity se = new StringEntity(jsonobj.toString());
-            se.setContentType("application/json;charset=UTF-8");
-            se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json;charset=UTF-8"));
-            httpPostReq.setEntity(se);
-
-
-        } catch (JSONException e){
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e){
-            e.printStackTrace();
-        }
-
-
-        try{
-            httpClient.execute(httpPostReq);
-
-            HttpResponse httpresponse = httpClient.execute(httpPostReq);
-            String responseText = EntityUtils.toString(httpresponse.getEntity());
-            Log.d("responseTest", responseText);
-
-        } catch (ClientProtocolException e){
-            e.printStackTrace();
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-        */
-
-
-
-
-
-        final ProfilePictureView profilePictureView = (ProfilePictureView) findViewById(R.id.profilePic);
+        final ProfilePictureView profilePictureView = (ProfilePictureView) findViewById(R.id.option_1);
         final TextView mTextDetails = (TextView) findViewById(R.id.text_details);
 
-        final ProfilePictureView mOption1 = (ProfilePictureView)findViewById(R.id.profilePic);
-        final ProfilePictureView mOption2 = (ProfilePictureView)findViewById(R.id.option_2);
-        final ProfilePictureView mOption3 = (ProfilePictureView)findViewById(R.id.option_3);
-        final ProfilePictureView mOption4 = (ProfilePictureView)findViewById(R.id.option_4);
-        final ProfilePictureView mOption5 = (ProfilePictureView)findViewById(R.id.option_5);
+        mOption1 = (ProfilePictureView)findViewById(R.id.option_1);
+        mOption2 = (ProfilePictureView)findViewById(R.id.option_2);
+        mOption3 = (ProfilePictureView)findViewById(R.id.option_3);
+        mOption4 = (ProfilePictureView)findViewById(R.id.option_4);
+        mOption5 = (ProfilePictureView)findViewById(R.id.option_5);
 
         final ProfilePictureView mChoice1 = (ProfilePictureView)findViewById(R.id.choice_1);
         final ProfilePictureView mChoice2 = (ProfilePictureView)findViewById(R.id.choice_2);
@@ -126,6 +99,9 @@ public class DragActivity extends Activity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             Profile currentProfile = (Profile) extras.get("currentProfile");
+            user_id = (String) extras.get("user_id");
+            session_key = (String) extras.get("session_key");
+
             profilePictureView.setProfileId(currentProfile.getId());
 
             String userID=currentProfile.getId();
@@ -313,6 +289,7 @@ public class DragActivity extends Activity {
             }
     }
 
+
     private class ConnectionTask extends AsyncTask<String, Void, String>{
         @Override
         protected String doInBackground(String...urls){
@@ -327,11 +304,10 @@ public class DragActivity extends Activity {
 
             try {
                 // Add your data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(4);
-                nameValuePairs.add(new BasicNameValuePair("action", "common.reg"));
-                nameValuePairs.add(new BasicNameValuePair("name", "asdf"));
-                nameValuePairs.add(new BasicNameValuePair("email", "asdf@gmail.com"));
-                nameValuePairs.add(new BasicNameValuePair("password", "password"));
+                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
+                nameValuePairs.add(new BasicNameValuePair("action", "common.getMatches"));
+                nameValuePairs.add(new BasicNameValuePair("user_id", user_id));
+                nameValuePairs.add(new BasicNameValuePair("session_key", session_key));
                 httpPostReq.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                 Log.d("URL", httpPostReq.toString());
                 // Execute HTTP Post Request
