@@ -2,39 +2,296 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF"
+    android:background="#78ccc3"
     tools:context="com.cs130.gamesetmatch">
 
-    <TextView
-        android:id="@+id/profile"
+    <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textName"
-        android:layout_centerHorizontal="true"
-        android:text="Profile"
-        android:textColor="#000"
-        android:textSize="60sp"
-        android:textStyle="bold" />
+        android:id="@+id/scrollView"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/textName"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:layout_above="@+id/gender"
-        />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_margin="25dp"
+            android:background="#fff">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/gender"
-        android:text="Gender"
-        android:textSize="60sp"
-        android:textStyle="bold"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
+            <TextView
+                android:id="@+id/profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="PROFILE"
+                android:textColor="#000"
+                android:textSize="35dp"
+                android:textStyle="bold"
+                android:layout_above="@+id/gender"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="25dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/name"
+                android:text="NAME"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal" />
+
+            <EditText
+                android:layout_width="273dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/textName"
+                android:layout_gravity="center_horizontal"
+                android:textAlignment="center"
+                android:layout_marginBottom="25dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/gender"
+                android:text="GENDER"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal" />
+
+            <EditText
+                android:layout_width="270dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/textGender"
+                android:layout_gravity="center_horizontal"
+                android:textAlignment="center"
+                android:layout_marginBottom="25dp"/>
+
+            <!-- PREFERENCES -->
+            <TextView
+                android:id="@+id/preferences"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="PREFERENCES"
+                android:textColor="#000"
+                android:textSize="35dp"
+                android:textStyle="bold"
+                android:layout_above="@+id/gender"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="25dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/sex"
+                android:text="SEXUAL ORIENTATION"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="25dp">
+                <RadioGroup
+                    android:id="@+id/radioGroup1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Male"
+                        android:id="@+id/male"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="10dp" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Female"
+                        android:id="@+id/female"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="20dp" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/age"
+                android:text="AGE"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal" />
+
+            <EditText
+                android:layout_width="270dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/textAge"
+                android:layout_gravity="center_horizontal"
+                android:textAlignment="center"
+                android:layout_marginBottom="25dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/height"
+                android:text="HEIGHT"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal" />
+            <EditText
+                android:layout_width="270dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/textHeight"
+                android:layout_gravity="center_horizontal"
+                android:textAlignment="center"
+                android:layout_marginBottom="25dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/education"
+                android:text="EDUCATION"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="25dp">
+                <RadioGroup
+                    android:id="@+id/radioGroup2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="None"
+                        android:id="@+id/none"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="10dp" />
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Highschool"
+                        android:id="@+id/highschool"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="10dp" />
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="College"
+                        android:id="@+id/college"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="20dp" />
+                </RadioGroup>
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ethnicity"
+                android:text="ETHNICITY"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="25dp">
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="African"
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/checkAfrican" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Caucasian"
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/checkWhite" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hispanic"
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/checkHispanic" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Other"
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/checkOther" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Asian/Pacific Islander"
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/checkAsian" />
+            </LinearLayout>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:id="@+id/updateProfile_btn"
+                android:layout_height="50dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center"
+                android:text="SAVE PROFILE"
+                android:background="#e4cb54"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:id="@+id/filler" />
+
+
+        </LinearLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/edit_profile"
