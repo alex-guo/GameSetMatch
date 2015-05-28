@@ -64,6 +64,8 @@ public class DragActivity extends Activity {
     private ProfilePictureView mChoice4;
     private ProfilePictureView mChoice5;
 
+    private String[] server =  new String[] {"http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,16 +90,16 @@ public class DragActivity extends Activity {
 
         //get other users through startGame
         ConnectionTask task  = new ConnectionTask();
-        task.execute(new String[] {"http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com"});
+        task.execute(server);
 
 
         //get other users through getProfile
         ConnectionTask2 task2  = new ConnectionTask2();
-        task2.execute(new String[] {"http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com"});
+        task2.execute(server);
 
 
         mOption1.setPresetSize(ProfilePictureView.SMALL);
-        mOption2.setPresetSize(mOption2.SMALL);
+        mOption2.setPresetSize(ProfilePictureView.SMALL);
 
         mChoice1.setPresetSize(ProfilePictureView.SMALL);
         mChoice2.setPresetSize(ProfilePictureView.SMALL);
@@ -328,7 +330,7 @@ public class DragActivity extends Activity {
 
             try {
                 // Add your data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
+                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
                 nameValuePairs.add(new BasicNameValuePair("action", "common.getProfile"));
                 nameValuePairs.add(new BasicNameValuePair("user_id", user_id));
                 nameValuePairs.add(new BasicNameValuePair("session_key", session_key));
@@ -348,8 +350,6 @@ public class DragActivity extends Activity {
 
 
                 return str;
-            } catch (ClientProtocolException e){
-                e.printStackTrace();
             } catch (IOException e){
                 e.printStackTrace();
             }
@@ -361,7 +361,8 @@ public class DragActivity extends Activity {
 
              try{
                  JSONObject json = new JSONObject(result);
-                 textView.setText(json.getString("playerList"));
+                 //textView.setText(json.getString("playerList"));
+                 textView.setText("onPostExecute");
 
              } catch (JSONException e){
                  e.printStackTrace();
@@ -394,7 +395,7 @@ public class DragActivity extends Activity {
 
             try {
                 // Add your data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
+                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
                 nameValuePairs.add(new BasicNameValuePair("action", "game.startGame"));
                 nameValuePairs.add(new BasicNameValuePair("user_id", other_user_id));
                 nameValuePairs.add(new BasicNameValuePair("session_key", session_key));
@@ -414,8 +415,6 @@ public class DragActivity extends Activity {
 
 
                 return str;
-            } catch (ClientProtocolException e){
-                e.printStackTrace();
             } catch (IOException e){
                 e.printStackTrace();
             }
