@@ -15,10 +15,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.Profile;
+import com.facebook.login.LoginManager;
 import com.facebook.login.widget.ProfilePictureView;
 
 import org.apache.http.HttpResponse;
@@ -171,7 +173,17 @@ public class DragActivity extends Activity {
             mChoice4.setOnDragListener(new ChoiceDragListener(userID));
             mChoice5.setOnDragListener(new ChoiceDragListener(userID));
 
-
+            Button matchButton = (Button) findViewById(R.id.pls_btn);
+            matchButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(DragActivity.this, MatchActivity.class);
+                    intent.putExtra("currentProfile", currentProfile);
+                    intent.putExtra("user_id", user_id);
+                    intent.putExtra("session_key", session_key);
+                    startActivity(intent);
+                }
+            });
         }
 
 
