@@ -1,26 +1,14 @@
 package com.cs130.gamesetmatch;
 
-import android.content.ClipData;
+
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
-import android.graphics.Bitmap;
-import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.media.Image;
+import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -32,12 +20,22 @@ import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.facebook.login.widget.ProfilePictureView;
 
-import org.w3c.dom.Text;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+
+import java.io.IOException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -48,6 +46,13 @@ public class MainFragment extends Fragment {
     private CallbackManager mCallbackManager;
     private AccessTokenTracker mTokenTracker;
     private ProfileTracker mProfileTracker;
+
+    //variables to pass to backend
+    private String name, email, password, token;
+
+    //variables to pass to dashboard activity
+    private String user_id;
+    private String session_key;
 
     private FacebookCallback<LoginResult> mFacebookCallback = new FacebookCallback<LoginResult>() {
         @Override
@@ -71,7 +76,6 @@ public class MainFragment extends Fragment {
         }
     };
 
-
     public MainFragment() {
     }
 
@@ -88,8 +92,6 @@ public class MainFragment extends Fragment {
 
         mTokenTracker.startTracking();
         mProfileTracker.startTracking();
-
-
 
 
         /*
@@ -160,30 +162,20 @@ public class MainFragment extends Fragment {
                         String userId = currentProfile.getId();
                         Log.d("userid", userId);
 
+                        name = currentProfile.getName();
+                        email = "asdf@gmail.com";
+                        password = "asdfpassword";
+                        token = currentProfile.getId();
+
+                        ConnectionTask task  = new ConnectionTask();
+                        task.execute(new String[]{"http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com"});
+
 
                         Intent i = new Intent(getActivity().getApplicationContext(), DashboardActivity.class);
                         i.putExtra("currentProfile", currentProfile);
+                        i.putExtra("user_id", user_id);
+                        i.putExtra("session_key", session_key);
                         startActivity(i);
-                        //startActivity(new Intent(getActivity(), DragActivity.class));
-
-                        //profilePictureView.setProfileId(userId);
-
-                        //ImageView fbImage = ((ImageView) profilePictureView.getChildAt(0));
-
-                        //Bitmap bitmap = ((BitmapDrawable) fbImage.getDrawable()).getBitmap();
-
-                        //img.setDefaultProfilePicture(bitmap);
-                        //img.setVisibility(View.VISIBLE);
-
-
-                        /*
-                        mOption1.setOnLongClickListener(new OnLongClickListen());
-                        mChoice1.setOnDragListener(new ChoiceDragListener(userId));
-                        mChoice2.setOnDragListener(new ChoiceDragListener(userId));
-                        mChoice3.setOnDragListener(new ChoiceDragListener(userId));
-                        mChoice4.setOnDragListener(new ChoiceDragListener(userId));
-                        mChoice5.setOnDragListener(new ChoiceDragListener(userId));
-                        */
 
                         mProfileTracker.stopTracking();
 
@@ -255,100 +247,76 @@ public class MainFragment extends Fragment {
     */
 
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-
-    private final class OnLongClickListen implements View.OnLongClickListener {
-        public boolean onLongClick(View view) {
-            //setup drag
-            ClipData data = ClipData.newPlainText("", "");
-            View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-
-            //start dragging the item touched
-            view.startDrag(data, shadowBuilder, view, 0);
-            return true;
-        }
-    }
-
-    private class ChoiceDragListener implements View.OnDragListener {
-        String userId;
-        public ChoiceDragListener(String userId){
-            this.userId=userId;
-        }
+    private class ConnectionTask extends AsyncTask<String, Void, String> {
         @Override
-        public boolean onDrag(View v, DragEvent event) {
-            //handle drag events
-            switch (event.getAction()) {
-                case DragEvent.ACTION_DRAG_STARTED:
-                    //no action necessary
-                    break;
-                case DragEvent.ACTION_DRAG_ENTERED:
-                    //no action necessary
-                    break;
-                case DragEvent.ACTION_DRAG_EXITED:
-                    //no action necessary
-                    break;
-                case DragEvent.ACTION_DROP:
+        protected String doInBackground(String...urls){
 
+            //create HTTP client
+            DefaultHttpClient httpClient = new DefaultHttpClient();
 
-                    //handle the dragged view being dropped over a drop view
+            String link = "http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com";
 
+            //create HTTP post
+            HttpPost httpPostReq = new HttpPost(link);
 
-                    //handle the dragged view being dropped over a target view
-                    View view = (View) event.getLocalState();
+            try {
+                // Add your data
+                List<NameValuePair> nameValuePairs = new ArrayList<>(4);
+                nameValuePairs.add(new BasicNameValuePair("action", "common.reg"));
+                nameValuePairs.add(new BasicNameValuePair("name", name));
+                nameValuePairs.add(new BasicNameValuePair("email", email));
+                nameValuePairs.add(new BasicNameValuePair("password", password));
+                nameValuePairs.add(new BasicNameValuePair("token", token));
 
-
-                    //stop displaying the view where it was before it was dragged
-                    view.setVisibility(View.INVISIBLE);
-
-                    //view dragged item is being dropped on
-                    ProfilePictureView dropTarget = (ProfilePictureView) v;
-
-                    //view being dragged and dropped
-                    ProfilePictureView dropped = (ProfilePictureView) view;
-
-                    //update the text in the target view to reflect the data being dropped
-                    ///ropTarget.setText(dropped.getText());
-                    //dropTarget.setVisibility(View.VISIBLE);
-                    dropTarget.setProfileId(userId);
-
-
-                    //make it bold to highlight the fact that an item has been dropped
-                    //dropTarget.setTypeface(Typeface.DEFAULT_BOLD);
-
-                    //if an item has already been dropped here, there will be a tag
-                    Object tag = dropTarget.getTag();
-
-                    //if there is already an item here, set it back visible in its original place
-                    if(tag!=null)
-                    {
-                        //the tag is the view id already dropped here
-                        int existingID = (Integer)tag;
-                        //set the original view visible again
-                        //findViewById(existingID).setVisibility(View.VISIBLE);
-                    }
-
-                    //set the tag in the target view to the ID of the view being dropped
-                    dropTarget.setTag(dropped.getId());
-
-                    break;
-                case DragEvent.ACTION_DRAG_ENDED:
-                    //no action necessary
-                    break;
-                default:
-                    break;
+                httpPostReq.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                Log.d("URL", httpPostReq.toString());
+                // Execute HTTP Post Request
+                //HttpResponse response = httpclient.execute(httppost);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
             }
 
-            return true;
+
+            try{
+                HttpResponse httpResponse = httpClient.execute(httpPostReq);
+                String str = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
+                Log.d("strConnection", str);
+
+
+                return str;
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+            return "failure";
         }
 
+        @Override
+        protected void onPostExecute(String result) {
+
+            try{
+                JSONObject json = new JSONObject(result);
+                session_key = json.getString("session_key");
+                user_id = json.getString("user_id");
+
+
+                //textView.setText(json.getString("user_id"));
+                //textView.setText(json.getString("session_key"));
+
+
+                Log.d("MAINstrID", user_id);
+                Log.d("MAINstrKEY", session_key);
+
+
+            } catch (JSONException e){
+                e.printStackTrace();
+            }
+        }
     }
-
-
 
 }

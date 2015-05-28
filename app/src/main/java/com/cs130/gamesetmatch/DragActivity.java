@@ -362,6 +362,8 @@ public class DragActivity extends Activity {
                 nameValuePairs.add(new BasicNameValuePair("user_id", user_id));
                 nameValuePairs.add(new BasicNameValuePair("session_key", session_key));
                 httpPostReq.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                Log.d("startGamestrID", user_id);
+                Log.d("startGamestrKEY", session_key);
                 Log.d("URL", httpPostReq.toString());
                 // Execute HTTP Post Request
                 //HttpResponse response = httpclient.execute(httppost);
