@@ -80,8 +80,10 @@ public class DashboardActivity extends Activity {
             gameButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(DashboardActivity.this, DragActivity.class);
+                    //Intent intent = new Intent(DashboardActivity.this, DragActivity.class);
+                    Intent intent = new Intent (DashboardActivity.this, WaitGameActivity.class);
                     intent.putExtra("currentProfile", currentProfile);
+
                     intent.putExtra("user_id", user_id);
                     intent.putExtra("session_key", session_key);
                     startActivity(intent);
@@ -102,6 +104,8 @@ public class DashboardActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(DashboardActivity.this, ViewMatchesActivity.class);
+                    intent.putExtra("session_key", session_key);
+                    intent.putExtra("user_id", user_id);
                     startActivity(intent);
                 }
             });
@@ -160,12 +164,15 @@ public class DashboardActivity extends Activity {
 
             try{
                 JSONObject json = new JSONObject(result);
+                session_key = json.getString("session_key");
+                user_id = json.getString("user_id");
 
-                //textView.setText(json.getString("user_id"));
+
+                textView.setText(json.getString("user_id"));
                 //textView.setText(json.getString("session_key"));
+
                 user_id = json.getString("user_id");
                 session_key = json.getString("session_key");
-
             } catch (JSONException e){
                 e.printStackTrace();
             }
