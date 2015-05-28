@@ -93,7 +93,11 @@ public class ProfileViewActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(ProfileViewActivity.this, DashboardActivity.class);
-                    intent.putExtra("currentProfile", (Profile) extras.get("currentProfile"));
+                    intent.putExtra("currentProfile", currentProfile);
+                    intent.putExtra("haveID", "true");
+                    intent.putExtra("user_id", user_id);
+                    intent.putExtra("session_key", session_key);
+
 
                     //getProfile, setPreferences using their changes through updateProfile and updatePreferences
 
