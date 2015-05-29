@@ -32,7 +32,7 @@ import java.util.List;
  * Created by Alex on 5/7/2015.
  */
 public class DashboardActivity extends Activity {
-    private TextView textView;
+    //private TextView textView;
 
     //variables to pass to backend
     private String name, email, password, token;
@@ -49,7 +49,7 @@ public class DashboardActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        textView = (TextView) findViewById(R.id.TextView01);
+        //textView = (TextView) findViewById(R.id.TextView01);
 
 
         final Profile currentProfile;
@@ -182,7 +182,7 @@ public class DashboardActivity extends Activity {
 
             try{
                 JSONObject json = new JSONObject(result);
-                textView.setText(json.getString("user_id"));
+                //textView.setText(json.getString("user_id"));
                 //textView.setText(json.getString("session_key"));
 
                 user_id = json.getString("user_id");

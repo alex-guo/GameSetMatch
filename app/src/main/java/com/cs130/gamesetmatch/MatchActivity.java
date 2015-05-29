@@ -8,18 +8,30 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.facebook.Profile;
+import com.facebook.login.widget.ProfilePictureView;
 
 
 public class MatchActivity extends Activity {
     private Profile currentProfile;
     private String user_id;
     private String session_key;
+
+
+    private ProfilePictureView match_picture;
+    private TextView match_name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match);
+
+        match_picture = (ProfilePictureView)findViewById(R.id.profilePic);
+        match_picture.setProfileId("100000059978309");
+        match_name = (TextView) findViewById(R.id.match_name);
+        match_name.setText("Christopher Lim");
 
 
         Bundle extras = getIntent().getExtras();
