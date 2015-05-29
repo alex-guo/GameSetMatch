@@ -17,7 +17,7 @@
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/crown"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <meta-data
@@ -36,6 +36,9 @@
         <activity
             android:name=".DashboardActivity"
             android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".MatchActivity"
+            android:parentActivityName=".MatchActivity" />
         <activity
             android:name=".ProfileViewActivity"
             android:parentActivityName=".MainActivity" />

@@ -32,7 +32,7 @@ import java.util.List;
  * Created by Alex on 5/7/2015.
  */
 public class DashboardActivity extends Activity {
-    private TextView textView;
+    //private TextView textView;
 
     //variables to pass to backend
     private String name, email, password, token;
@@ -41,14 +41,15 @@ public class DashboardActivity extends Activity {
     private String user_id;
     private String session_key;
 
-    private String[] server = new String[]{"http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com"};
+    private String haveID;
+    private String[] server = new String[]{"http://ec2-52-10-172-62.us-west-2.compute.amazonaws.com"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        textView = (TextView) findViewById(R.id.TextView01);
+        //textView = (TextView) findViewById(R.id.TextView01);
 
 
         final Profile currentProfile;
@@ -56,13 +57,26 @@ public class DashboardActivity extends Activity {
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
             currentProfile = (Profile) extras.get("currentProfile");
+            haveID = (String) extras.get("haveID");
+
             name = currentProfile.getName();
             email = "asdf@gmail.com";
             password = "asdfpassword";
             token = currentProfile.getId();
 
-            ConnectionTask task  = new ConnectionTask();
-            task.execute(server);
+            Log.d("haveIDstr", haveID);
+
+            if (haveID.equals("false")){
+                Log.d("IDstr", "newID");
+                haveID="true";
+                ConnectionTask task  = new ConnectionTask();
+                task.execute(server);
+            }
+            else{
+                user_id = (String) extras.get("user_id");
+                session_key = (String) extras.get("session_key");
+                Log.d("IDstr", "noIDneeded");
+            }
 
 
             final ProfilePictureView profilePictureView = (ProfilePictureView) findViewById(R.id.profilePic);
@@ -96,6 +110,8 @@ public class DashboardActivity extends Activity {
                 public void onClick(View v) {
                     Intent intent = new Intent(DashboardActivity.this, ProfileViewActivity.class);
                     intent.putExtra("currentProfile", currentProfile);
+                    intent.putExtra("user_id", user_id);
+                    intent.putExtra("session_key", session_key);
                     startActivity(intent);
                 }
             });
@@ -104,8 +120,8 @@ public class DashboardActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(DashboardActivity.this, ViewMatchesActivity.class);
-                    intent.putExtra("session_key", session_key);
                     intent.putExtra("user_id", user_id);
+                    intent.putExtra("session_key", session_key);
                     startActivity(intent);
                 }
             });
@@ -125,7 +141,7 @@ public class DashboardActivity extends Activity {
             //create HTTP client
             DefaultHttpClient httpClient = new DefaultHttpClient();
 
-            String link = "http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com";
+            String link = "http://ec2-52-10-172-62.us-west-2.compute.amazonaws.com";
 
             //create HTTP post
             HttpPost httpPostReq = new HttpPost(link);
@@ -166,11 +182,7 @@ public class DashboardActivity extends Activity {
 
             try{
                 JSONObject json = new JSONObject(result);
-                session_key = json.getString("session_key");
-                user_id = json.getString("user_id");
-
-
-                textView.setText(json.getString("user_id"));
+                //textView.setText(json.getString("user_id"));
                 //textView.setText(json.getString("session_key"));
 
                 user_id = json.getString("user_id");

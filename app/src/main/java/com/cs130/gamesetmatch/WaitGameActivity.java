@@ -31,14 +31,14 @@ import java.util.List;
 
 
 public class WaitGameActivity extends ActionBarActivity {
-    private TextView textView1;
-    private TextView textView2;
-    private TextView textView3;
+    //private TextView textView1;
+    //private TextView textView2;
+    //private TextView textView3;
     String session_key;
     String user_id;
     Profile currentProfile;
 
-    private String[] server = new String[]{"http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com"};
+    private String[] server = new String[]{"http://ec2-52-10-172-62.us-west-2.compute.amazonaws.com"};
 
 
     @Override
@@ -46,9 +46,9 @@ public class WaitGameActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wait_game);
 
-        textView1 = (TextView) findViewById(R.id.TextView01);
-        textView2 = (TextView) findViewById(R.id.TextView02);
-        textView3 = (TextView) findViewById(R.id.TextView03);
+        //textView1 = (TextView) findViewById(R.id.TextView01);
+        //textView2 = (TextView) findViewById(R.id.TextView02);
+        //textView3 = (TextView) findViewById(R.id.TextView03);
 
 
 
@@ -57,8 +57,8 @@ public class WaitGameActivity extends ActionBarActivity {
             currentProfile = (Profile) extras.get("currentProfile");
             session_key = (String) extras.get("session_key");
             user_id = (String) extras.get("user_id");
-            textView1.setText(session_key);
-            textView2.setText(user_id);
+            //textView1.setText(session_key);
+            //textView2.setText(user_id);
 
             ConnectionTask task  = new ConnectionTask();
             task.execute(server);
@@ -111,7 +111,7 @@ public class WaitGameActivity extends ActionBarActivity {
             //create HTTP client
             DefaultHttpClient httpClient = new DefaultHttpClient();
 
-            String link = "http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com";
+            String link = "http://ec2-52-10-172-62.us-west-2.compute.amazonaws.com";
 
             //create HTTP post
             HttpPost httpPostReq = new HttpPost(link);
@@ -150,7 +150,7 @@ public class WaitGameActivity extends ActionBarActivity {
             try{
                 JSONObject json = new JSONObject(result);
 
-                textView3.setText(json.getString("message"));
+                //textView3.setText(json.getString("message"));
 
 
                 //textView.setText(json.getString("user_id"));
@@ -173,7 +173,7 @@ public class WaitGameActivity extends ActionBarActivity {
             //create HTTP client
             DefaultHttpClient httpClient = new DefaultHttpClient();
 
-            String link = "http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com";
+            String link = "http://ec2-52-10-172-62.us-west-2.compute.amazonaws.com";
 
             //create HTTP post
             HttpPost httpPostReq = new HttpPost(link);
@@ -212,7 +212,7 @@ public class WaitGameActivity extends ActionBarActivity {
             try{
                 JSONObject json = new JSONObject(result);
 
-                textView3.setText(json.getString("message"));
+                //textView3.setText(json.getString("message"));
 
 
                 //textView.setText(json.getString("user_id"));

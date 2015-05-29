@@ -15,10 +15,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.Profile;
+import com.facebook.login.LoginManager;
 import com.facebook.login.widget.ProfilePictureView;
 
 import org.apache.http.HttpResponse;
@@ -36,6 +38,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -68,9 +71,17 @@ public class DragActivity extends Activity {
     private ProfilePictureView mChoice4;
     private ProfilePictureView mChoice5;
 
-    private String[] otherUsers = new String[5];
+    private String otherUsers;
+    private String[] arrayUsers;
 
-    private String[] server =  new String[] {"http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com"};
+    private InformationStorage info_option1;
+    private InformationStorage info_option2;
+    private InformationStorage info_option3;
+    private InformationStorage info_option4;
+    private InformationStorage info_option5;
+
+
+    private String[] server =  new String[] {"http://ec2-52-10-172-62.us-west-2.compute.amazonaws.com"};
 
 
     @Override
@@ -79,6 +90,7 @@ public class DragActivity extends Activity {
         setContentView(R.layout.activity_drag);
 
 
+        /*
         new CountDownTimer(10000, 1) {
             public void onTick(long millisUntilFinished) {
 
@@ -94,6 +106,8 @@ public class DragActivity extends Activity {
                 startActivity(intent);
             }
         }.start();
+
+        */
 
         textView = (TextView) findViewById(R.id.TextView01);
 
@@ -135,18 +149,18 @@ public class DragActivity extends Activity {
             //go through array of users
             //get other users through getProfile and set information
             //pass in array of information to ClickListener
-            GetProfileTask getProfileTask  = new GetProfileTask();
-            getProfileTask.execute(server);
+            //GetProfileTask getProfileTask  = new GetProfileTask();
+            //getProfileTask.execute(server);
 
             String userID=currentProfile.getId();
 
             mTextDetails.setText("Welcome " + currentProfile.getFirstName());
 
-            mOption1.setProfileId(currentProfile.getId());
+            mOption1.setProfileId("100000059978309");
             mOption2.setProfileId("10152998692153003");
-            mOption3.setProfileId("10152998692153003");
-            mOption4.setProfileId("10152998692153003");
-            mOption5.setProfileId("10152998692153003");
+            mOption3.setProfileId("682814961");
+            mOption4.setProfileId("827523929");
+            mOption5.setProfileId("571718695");
 
 
             mOption1.setOnLongClickListener(new OnLongClickListen());
@@ -155,11 +169,59 @@ public class DragActivity extends Activity {
             mOption4.setOnLongClickListener(new OnLongClickListen());
             mOption5.setOnLongClickListener(new OnLongClickListen());
 
-            mOption1.setOnClickListener(new ClickListener());
-            mOption2.setOnClickListener(new ClickListener());
-            mOption3.setOnClickListener(new ClickListener());
-            mOption4.setOnClickListener(new ClickListener());
-            mOption5.setOnClickListener(new ClickListener());
+            info_option1 = new InformationStorage();
+            info_option1.name = "Name: Christopher Lim";
+            info_option1.token = "hi";
+            info_option1.age = "Age: 22";
+            info_option1.about = "About: I like dogs, and reddit";
+            info_option1.gender = "Gender: male";
+            info_option1.height = "Height: 5'8''";
+            info_option1.ethnicity = "Ethnicity: Asian";
+
+            info_option2 = new InformationStorage();
+            info_option2.name = "Name: Alex Guo";
+            info_option2.token = "hi";
+            info_option2.age = "Age: 21";
+            info_option2.about = "About: hey QT 3.14159";
+            info_option2.gender = "Gender: male";
+            info_option2.height = "Height:5'7''";
+            info_option2.ethnicity = "Ethnicity: Asian";
+
+            info_option3 = new InformationStorage();
+            info_option3.name = "Name: Andre Hsu";
+            info_option3.token = "hi";
+            info_option3.age = "Age: 22";
+            info_option3.about = "About: I like computers and science";
+            info_option3.gender = "Gender: male";
+            info_option3.height = "Height:5'7''";
+            info_option3.ethnicity = "Ethnicity: Asian";
+
+            info_option4 = new InformationStorage();
+            info_option4.name = "Name: Joseph Lin";
+            info_option4.token = "hi";
+            info_option4.age = "Age: 20";
+            info_option4.about = "About: I like learning";
+            info_option4.gender = "Gender: male";
+            info_option4.height = "Height:5'7''";
+            info_option4.ethnicity = "Ethnicity: Asian";
+
+            info_option5 = new InformationStorage();
+            info_option5.name = "Name: Justin Hamilton";
+            info_option5.token = "hi";
+            info_option5.age = "Age: 22";
+            info_option5.about = "About: I like the movie Frozen.";
+            info_option5.gender = "Gender: male";
+            info_option5.height = "Height:5'7''";
+            info_option5.ethnicity = "Ethnicity: Asian";
+
+
+
+
+            mOption1.setOnClickListener(new ClickListener("100000059978309", info_option1));
+            mOption2.setOnClickListener(new ClickListener("10152998692153003", info_option2));
+            mOption3.setOnClickListener(new ClickListener("682814961", info_option3));
+            mOption4.setOnClickListener(new ClickListener("827523929", info_option4));
+            mOption5.setOnClickListener(new ClickListener("571718695", info_option5));
 
 
             mChoice1.setOnDragListener(new ChoiceDragListener(userID));
@@ -168,7 +230,17 @@ public class DragActivity extends Activity {
             mChoice4.setOnDragListener(new ChoiceDragListener(userID));
             mChoice5.setOnDragListener(new ChoiceDragListener(userID));
 
-
+            Button matchButton = (Button) findViewById(R.id.pls_btn);
+            matchButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(DragActivity.this, MatchActivity.class);
+                    intent.putExtra("currentProfile", currentProfile);
+                    intent.putExtra("user_id", user_id);
+                    intent.putExtra("session_key", session_key);
+                    startActivity(intent);
+                }
+            });
         }
 
 
@@ -313,7 +385,15 @@ public class DragActivity extends Activity {
 
 
     private class ClickListener implements View.OnClickListener {
+        private String user_id;
+        private InformationStorage info;
+        public ClickListener(){
 
+        }
+        public ClickListener(String user_id, InformationStorage info){
+            this.user_id = user_id;
+            this.info = info;
+        }
 
         public void onClick(View v){
 
@@ -324,11 +404,33 @@ public class DragActivity extends Activity {
             View layout = inflater.inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toast_layout_id));
 
 
-            TextView text = (TextView) layout.findViewById(R.id.text);
-            text.setText("This is a Custom Toast Message");
+            //TextView text = (TextView) layout.findViewById(R.id.text);
+            //text.setText("This is a Custom Toast Message");
+
+            TextView textName = (TextView) layout.findViewById(R.id.textName);
+            TextView textAge = (TextView) layout.findViewById(R.id.textAge);
+
+            TextView textAbout = (TextView) layout.findViewById(R.id.textAbout);
+
+            TextView textGender = (TextView) layout.findViewById(R.id.textGender);
+
+            TextView textHeight = (TextView) layout.findViewById(R.id.textHeight);
+
+            TextView textEthnicity = (TextView) layout.findViewById(R.id.textEthnicity);
+
+            textName.setText(info.name);
+            textAge.setText(info.age);
+            textAbout.setText(info.about);
+            textGender.setText(info.gender);
+            textHeight.setText(info.height);
+            textEthnicity.setText(info.ethnicity);
+
+
+
+
 
             ProfilePictureView pic = (ProfilePictureView) layout.findViewById(R.id.toastPic);
-            pic.setProfileId("10152998692153003");
+            pic.setProfileId(user_id);
 
 
             Toast toast = new Toast(getApplicationContext());
@@ -349,7 +451,7 @@ public class DragActivity extends Activity {
             //create HTTP client
             DefaultHttpClient httpClient = new DefaultHttpClient();
 
-            String link = "http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com";
+            String link = "http://ec2-52-10-172-62.us-west-2.compute.amazonaws.com";
 
             //create HTTP post
             HttpPost httpPostReq = new HttpPost(link);
@@ -362,6 +464,8 @@ public class DragActivity extends Activity {
                 nameValuePairs.add(new BasicNameValuePair("user_id", user_id));
                 nameValuePairs.add(new BasicNameValuePair("session_key", session_key));
                 httpPostReq.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                Log.d("startGamestrID", user_id);
+                Log.d("startGamestrKEY", session_key);
                 Log.d("URL", httpPostReq.toString());
                 // Execute HTTP Post Request
                 //HttpResponse response = httpclient.execute(httppost);
@@ -386,8 +490,13 @@ public class DragActivity extends Activity {
          @Override
         protected void onPostExecute(String result) {
 
+             otherUsers = result;
+             arrayUsers = otherUsers.split(",");
+             /*
              try{
                  JSONObject json = new JSONObject(result);
+
+
                  //textView.setText(json.getString("playerList"));
 
                  textView.setText("onPostExecute");
@@ -395,6 +504,7 @@ public class DragActivity extends Activity {
              } catch (JSONException e){
                  e.printStackTrace();
              }
+             */
         }
     }
 
@@ -404,11 +514,13 @@ public class DragActivity extends Activity {
     private class GetProfileTask extends AsyncTask<String, Void, String>{
 
         String other_user_id;
+        InformationStorage user_info;
         public GetProfileTask(){
 
         }
-        public GetProfileTask(String user_id){
+        public GetProfileTask(String user_id, InformationStorage user_info){
             other_user_id = user_id;
+            this.user_info = user_info;
         }
         @Override
         protected String doInBackground(String...urls){
@@ -416,7 +528,7 @@ public class DragActivity extends Activity {
             //create HTTP client
             DefaultHttpClient httpClient = new DefaultHttpClient();
 
-            String link = "http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com";
+            String link = "http://ec2-52-10-172-62.us-west-2.compute.amazonaws.com";
 
             //create HTTP post
             HttpPost httpPostReq = new HttpPost(link);
@@ -451,7 +563,23 @@ public class DragActivity extends Activity {
 
         @Override
         protected void onPostExecute(String result) {
+            try{
+                JSONObject json = new JSONObject(result);
+                user_info.name = json.getString("name");
+                user_info.token = json.getString("token");
+                user_info.age = json.getString("age");
+                user_info.about = json.getString("about");
+                user_info.gender = json.getString("gender");
+                user_info.height = json.getString("height");
+                user_info.ethnicity = json.getString("ethnicity");
 
+
+
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+
+            /*
             try{
                 JSONObject json = new JSONObject(result);
                 textView.setText(json.getString("playerList"));
@@ -460,7 +588,31 @@ public class DragActivity extends Activity {
             } catch (JSONException e){
                 e.printStackTrace();
             }
+            */
         }
+    }
+
+
+    private class InformationStorage{
+        private String name;
+        private String token;
+        private String age;
+        private String about;
+        private String gender;
+        private String height;
+        private String ethnicity;
+
+        public InformationStorage(){
+            this.name = null;
+            this.token = null;
+            this.age = null;
+            this.about = null;
+            this.gender = null;
+            this.height = null;
+            this.ethnicity = null;
+
+        }
+
     }
 
 }

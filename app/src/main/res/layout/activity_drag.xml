@@ -5,7 +5,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.cs130.gamesetmatch.DragActivity">
+    tools:context="com.cs130.gamesetmatch.DragActivity"
+    android:background="#fff">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -63,24 +64,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/choice_1"
-        android:layout_toLeftOf="@+id/login_button"
-        android:layout_toStartOf="@+id/login_button" />
+        android:layout_toLeftOf="@+id/pls_btn"
+        android:layout_toStartOf="@+id/pls_btn" />
 
     <com.facebook.login.widget.ProfilePictureView
         android:id="@+id/choice_3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/choice_2"
-        android:layout_toRightOf="@+id/login_button"
-        android:layout_toEndOf="@+id/login_button" />
+        android:layout_toRightOf="@+id/pls_btn"
+        android:layout_toEndOf="@+id/pls_btn" />
 
     <com.facebook.login.widget.ProfilePictureView
         android:id="@+id/choice_4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/login_button"
-        android:layout_toStartOf="@+id/login_button" />
+        android:layout_toLeftOf="@+id/pls_btn"
+        android:layout_toStartOf="@+id/pls_btn" />
 
     <com.facebook.login.widget.ProfilePictureView
         android:id="@+id/choice_5"
@@ -95,18 +96,22 @@
         android:layout_width="match_parent"
         android:gravity="center"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/login_button"
+        android:layout_alignTop="@+id/pls_btn"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/login_button"
+    <Button
+        android:id="@+id/pls_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="MATCH"
+        android:textColor="#fff"
+        android:background="#78ccc3"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="30dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:width="150dp" />
     <TextView
         android:id="@+id/TextView01"
         android:layout_width="match_parent"

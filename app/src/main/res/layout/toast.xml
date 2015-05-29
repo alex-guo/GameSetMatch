@@ -6,20 +6,71 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#000"
-    android:orientation="horizontal"
-    android:padding="5dp">
+    android:orientation="vertical"
+    android:padding="5dp"
+    android:weightSum="1">
 
     <com.facebook.login.widget.ProfilePictureView
         android:id="@+id/toastPic"
-        android:layout_height="@dimen/com_facebook_profilepictureview_preset_size_large"
-        android:layout_width="@dimen/com_facebook_profilepictureview_preset_size_large"
-        facebook:com_facebook_preset_size="large" />
+        android:layout_height="144dp"
+        android:layout_width="151dp"
+        facebook:com_facebook_preset_size="large"
+        android:layout_gravity="center_horizontal" />
+
 
     <TextView
-    android:id="@+id/text"
+    android:id="@+id/textName"
     android:layout_width="wrap_content"
-    android:layout_height="fill_parent"
-    android:textColor="#FFF"/>
+    android:layout_height="wrap_content"
+    android:textColor="#FFF"
+        android:layout_marginLeft="79dp"
+        android:layout_marginStart="79dp"
+        android:layout_weight="1.14" />
+
+    <TextView
+        android:id="@+id/textAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFF"
+        android:layout_marginLeft="79dp"
+        android:layout_marginStart="79dp"
+        android:layout_weight="1.14" />
+
+    <TextView
+    android:id="@+id/textAbout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="#FFF"
+    android:layout_marginLeft="79dp"
+    android:layout_marginStart="79dp"
+    android:layout_weight="1.14" />
+
+    <TextView
+        android:id="@+id/textGender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFF"
+        android:layout_marginLeft="79dp"
+        android:layout_marginStart="79dp"
+        android:layout_weight="1.14" />
+
+    <TextView
+        android:id="@+id/textHeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFF"
+        android:layout_marginLeft="79dp"
+        android:layout_marginStart="79dp"
+        android:layout_weight="1.14" />
+
+    <TextView
+        android:id="@+id/textEthnicity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFF"
+        android:layout_marginLeft="79dp"
+        android:layout_marginStart="79dp"
+        android:layout_weight="1.14" />
 
 
 </LinearLayout>
