@@ -54,8 +54,9 @@ public class ProfileViewActivity extends Activity {
     String session_key;
 
     private TextView textName;
+    private TextView textHeight;
 
-    private String[] server = new String[]{"http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com"};
+    private String[] server = new String[]{"http://ec2-52-10-172-62.us-west-2.compute.amazonaws.com"};
 
 
 
@@ -66,15 +67,15 @@ public class ProfileViewActivity extends Activity {
         final Profile currentProfile;
         textName = (TextView) findViewById(R.id.textName);
 
-        final TextView textHeight = (TextView) findViewById(R.id.textHeight);
+        textHeight = (TextView) findViewById(R.id.textHeight);
         final Bundle extras = getIntent().getExtras();
 
         if(extras != null) {
             session_key = (String )extras.get("session_key");
             user_id = (String) extras.get("user_id");
 
-            Log.d("InProfActstrKEY", session_key);
-            Log.d("InProfActstrID", user_id);
+            Log.d("InProfActstrKEY", session_key + "");
+            Log.d("InProfActstrID", user_id + "");
 
             /* Enter starting values into fields from database through common.getPreferences*/
             GetProfileTask getProfileTask  = new GetProfileTask();
@@ -84,7 +85,7 @@ public class ProfileViewActivity extends Activity {
             prefConnectionTask.execute(server);
 
             currentProfile = (Profile) extras.get("currentProfile");
-            //textName.setText(currentProfile.getName());
+            textName.setText(currentProfile.getName());
             textHeight.setText("Enter a height in cm!");
 
              /* Redirect to Dashboard */
@@ -127,7 +128,7 @@ public class ProfileViewActivity extends Activity {
             //create HTTP client
             DefaultHttpClient httpClient = new DefaultHttpClient();
 
-            String link = "http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com";
+            String link = "http://ec2-52-10-172-62.us-west-2.compute.amazonaws.com";
 
             //create HTTP post
             HttpPost httpPostReq = new HttpPost(link);
@@ -139,7 +140,7 @@ public class ProfileViewActivity extends Activity {
                 nameValuePairs.add(new BasicNameValuePair("user_id", user_id));
                 nameValuePairs.add(new BasicNameValuePair("session_key", session_key));
                 httpPostReq.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                Log.d("URL", httpPostReq.toString());
+                Log.d("URL", httpPostReq.toString() + "");
                 // Execute HTTP Post Request
                 //HttpResponse response = httpclient.execute(httppost);
             } catch (IOException e) {
@@ -150,7 +151,7 @@ public class ProfileViewActivity extends Activity {
             try{
                 HttpResponse httpResponse = httpClient.execute(httpPostReq);
                 String str = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
-                Log.d("str", str);
+                Log.d("str", str + "");
 
                 return str;
             } catch (IOException e){
@@ -174,9 +175,9 @@ public class ProfileViewActivity extends Activity {
                 height = json.getString("height");
                 ethnicity = json.getString("ethnicity");
 
-                Log.d("ProfTaskNamestr", name);
+                Log.d("ProfTaskNamestr", name + "");
 
-                textName.setText(name);
+                //textName.setText(name);
 
 
             } catch (JSONException e){
@@ -196,7 +197,7 @@ public class ProfileViewActivity extends Activity {
             //create HTTP client
             DefaultHttpClient httpClient = new DefaultHttpClient();
 
-            String link = "http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com";
+            String link = "http://ec2-52-10-172-62.us-west-2.compute.amazonaws.com";
 
             //create HTTP post
             HttpPost httpPostReq = new HttpPost(link);
@@ -208,7 +209,7 @@ public class ProfileViewActivity extends Activity {
                 nameValuePairs.add(new BasicNameValuePair("user_id", user_id));
                 nameValuePairs.add(new BasicNameValuePair("session_key", session_key));
                 httpPostReq.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                Log.d("URL", httpPostReq.toString());
+                Log.d("URL", httpPostReq.toString() + "");
                 // Execute HTTP Post Request
                 //HttpResponse response = httpclient.execute(httppost);
             } catch (IOException e) {
@@ -219,7 +220,7 @@ public class ProfileViewActivity extends Activity {
             try{
                 HttpResponse httpResponse = httpClient.execute(httpPostReq);
                 String str = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
-                Log.d("str", str);
+                Log.d("str", str + "");
 
                 return str;
             } catch (IOException e){
@@ -256,7 +257,7 @@ public class ProfileViewActivity extends Activity {
             //create HTTP client
             DefaultHttpClient httpClient = new DefaultHttpClient();
 
-            String link = "http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com";
+            String link = "http://ec2-52-10-172-62.us-west-2.compute.amazonaws.com";
 
             //create HTTP post
             HttpPost httpPostReq = new HttpPost(link);
@@ -270,7 +271,7 @@ public class ProfileViewActivity extends Activity {
                 nameValuePairs.add(new BasicNameValuePair("gender", newGender));
 
                 httpPostReq.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                Log.d("URL", httpPostReq.toString());
+                Log.d("URL", httpPostReq.toString()+"");
                 // Execute HTTP Post Request
                 //HttpResponse response = httpclient.execute(httppost);
             } catch (IOException e) {
@@ -281,7 +282,7 @@ public class ProfileViewActivity extends Activity {
             try{
                 HttpResponse httpResponse = httpClient.execute(httpPostReq);
                 String str = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
-                Log.d("str", str);
+                Log.d("str", str+"");
 
                 return str;
             } catch (IOException e){
@@ -314,7 +315,7 @@ public class ProfileViewActivity extends Activity {
             //create HTTP client
             DefaultHttpClient httpClient = new DefaultHttpClient();
 
-            String link = "http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com";
+            String link = "http://ec2-52-10-172-62.us-west-2.compute.amazonaws.com";
 
             //create HTTP post
             HttpPost httpPostReq = new HttpPost(link);
@@ -329,7 +330,7 @@ public class ProfileViewActivity extends Activity {
                 nameValuePairs.add(new BasicNameValuePair("height", newHeightPref));
 
                 httpPostReq.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                Log.d("URL", httpPostReq.toString());
+                Log.d("URL", httpPostReq.toString()+"");
                 // Execute HTTP Post Request
                 //HttpResponse response = httpclient.execute(httppost);
             } catch (IOException e) {
@@ -340,7 +341,7 @@ public class ProfileViewActivity extends Activity {
             try{
                 HttpResponse httpResponse = httpClient.execute(httpPostReq);
                 String str = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
-                Log.d("str", str);
+                Log.d("str", str+"");
 
                 return str;
             } catch (IOException e){
