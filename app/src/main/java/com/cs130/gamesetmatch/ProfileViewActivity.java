@@ -53,27 +53,38 @@ public class ProfileViewActivity extends Activity {
     String user_id;
     String session_key;
 
+    private TextView textName;
+
+    private String[] server = new String[]{"http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com"};
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_view);
         final Profile currentProfile;
-        final TextView textName = (TextView) findViewById(R.id.textName);
+        textName = (TextView) findViewById(R.id.textName);
 
         final TextView textHeight = (TextView) findViewById(R.id.textHeight);
         final Bundle extras = getIntent().getExtras();
 
         if(extras != null) {
+            session_key = (String )extras.get("session_key");
+            user_id = (String) extras.get("user_id");
+
+            Log.d("InProfActstrKEY", session_key);
+            Log.d("InProfActstrID", user_id);
 
             /* Enter starting values into fields from database through common.getPreferences*/
             GetProfileTask getProfileTask  = new GetProfileTask();
-            getProfileTask.execute(new String[]{"http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com"});
+            getProfileTask.execute(server);
 
             PrefConnectionTask prefConnectionTask  = new PrefConnectionTask();
-            prefConnectionTask.execute(new String[]{"http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com"});
+            prefConnectionTask.execute(server);
 
             currentProfile = (Profile) extras.get("currentProfile");
-            textName.setText(currentProfile.getName());
+            //textName.setText(currentProfile.getName());
             textHeight.setText("Enter a height in cm!");
 
              /* Redirect to Dashboard */
@@ -82,15 +93,19 @@ public class ProfileViewActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(ProfileViewActivity.this, DashboardActivity.class);
-                    intent.putExtra("currentProfile", (Profile) extras.get("currentProfile"));
+                    intent.putExtra("currentProfile", currentProfile);
+                    intent.putExtra("haveID", "true");
+                    intent.putExtra("user_id", user_id);
+                    intent.putExtra("session_key", session_key);
+
 
                     //getProfile, setPreferences using their changes through updateProfile and updatePreferences
 
                     UpdateProfConnectionTask updateProfConnectionTask  = new UpdateProfConnectionTask();
-                    updateProfConnectionTask.execute(new String[]{"http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com"});
+                    updateProfConnectionTask.execute(server);
 
                     UpdatePreferencesConnectionTask updatePreferencesConnectionTask  = new UpdatePreferencesConnectionTask();
-                    updatePreferencesConnectionTask.execute(new String[]{"http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com"});
+                    updatePreferencesConnectionTask.execute(server);
 
 
 
@@ -119,10 +134,10 @@ public class ProfileViewActivity extends Activity {
 
             try {
                 // Add your data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
+                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
                 nameValuePairs.add(new BasicNameValuePair("action", "common.getProfile"));
-                nameValuePairs.add(new BasicNameValuePair("name", "asdf"));
-                nameValuePairs.add(new BasicNameValuePair("session_key", "asdf@gmail.com"));
+                nameValuePairs.add(new BasicNameValuePair("user_id", user_id));
+                nameValuePairs.add(new BasicNameValuePair("session_key", session_key));
                 httpPostReq.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                 Log.d("URL", httpPostReq.toString());
                 // Execute HTTP Post Request
@@ -138,8 +153,6 @@ public class ProfileViewActivity extends Activity {
                 Log.d("str", str);
 
                 return str;
-            } catch (ClientProtocolException e){
-                e.printStackTrace();
             } catch (IOException e){
                 e.printStackTrace();
             }
@@ -160,6 +173,10 @@ public class ProfileViewActivity extends Activity {
                 gender = json.getString("gender");
                 height = json.getString("height");
                 ethnicity = json.getString("ethnicity");
+
+                Log.d("ProfTaskNamestr", name);
+
+                textName.setText(name);
 
 
             } catch (JSONException e){
@@ -186,10 +203,10 @@ public class ProfileViewActivity extends Activity {
 
             try {
                 // Add your data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
+                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
                 nameValuePairs.add(new BasicNameValuePair("action", "common.getPreferences"));
-                nameValuePairs.add(new BasicNameValuePair("name", "asdf"));
-                nameValuePairs.add(new BasicNameValuePair("session_key", "asdf@gmail.com"));
+                nameValuePairs.add(new BasicNameValuePair("user_id", user_id));
+                nameValuePairs.add(new BasicNameValuePair("session_key", session_key));
                 httpPostReq.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                 Log.d("URL", httpPostReq.toString());
                 // Execute HTTP Post Request
@@ -205,8 +222,6 @@ public class ProfileViewActivity extends Activity {
                 Log.d("str", str);
 
                 return str;
-            } catch (ClientProtocolException e){
-                e.printStackTrace();
             } catch (IOException e){
                 e.printStackTrace();
             }
@@ -248,7 +263,7 @@ public class ProfileViewActivity extends Activity {
 
             try {
                 // Add your data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(4);
+                List<NameValuePair> nameValuePairs = new ArrayList<>(4);
                 nameValuePairs.add(new BasicNameValuePair("action", "common.updateProfile"));
                 nameValuePairs.add(new BasicNameValuePair("about", newAbout));
                 nameValuePairs.add(new BasicNameValuePair("age", newAge));
@@ -269,8 +284,6 @@ public class ProfileViewActivity extends Activity {
                 Log.d("str", str);
 
                 return str;
-            } catch (ClientProtocolException e){
-                e.printStackTrace();
             } catch (IOException e){
                 e.printStackTrace();
             }
@@ -330,8 +343,6 @@ public class ProfileViewActivity extends Activity {
                 Log.d("str", str);
 
                 return str;
-            } catch (ClientProtocolException e){
-                e.printStackTrace();
             } catch (IOException e){
                 e.printStackTrace();
             }

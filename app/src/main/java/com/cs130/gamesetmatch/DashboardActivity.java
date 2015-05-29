@@ -58,6 +58,7 @@ public class DashboardActivity extends Activity {
         if(extras != null) {
             currentProfile = (Profile) extras.get("currentProfile");
             haveID = (String) extras.get("haveID");
+
             name = currentProfile.getName();
             email = "asdf@gmail.com";
             password = "asdfpassword";
@@ -72,6 +73,8 @@ public class DashboardActivity extends Activity {
                 task.execute(server);
             }
             else{
+                user_id = (String) extras.get("user_id");
+                session_key = (String) extras.get("session_key");
                 Log.d("IDstr", "noIDneeded");
             }
 
@@ -107,6 +110,8 @@ public class DashboardActivity extends Activity {
                 public void onClick(View v) {
                     Intent intent = new Intent(DashboardActivity.this, ProfileViewActivity.class);
                     intent.putExtra("currentProfile", currentProfile);
+                    intent.putExtra("user_id", user_id);
+                    intent.putExtra("session_key", session_key);
                     startActivity(intent);
                 }
             });
@@ -115,8 +120,8 @@ public class DashboardActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(DashboardActivity.this, ViewMatchesActivity.class);
-                    intent.putExtra("session_key", session_key);
                     intent.putExtra("user_id", user_id);
+                    intent.putExtra("session_key", session_key);
                     startActivity(intent);
                 }
             });
@@ -177,10 +182,6 @@ public class DashboardActivity extends Activity {
 
             try{
                 JSONObject json = new JSONObject(result);
-                session_key = json.getString("session_key");
-                user_id = json.getString("user_id");
-
-
                 textView.setText(json.getString("user_id"));
                 //textView.setText(json.getString("session_key"));
 
