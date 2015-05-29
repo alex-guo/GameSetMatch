@@ -51,7 +51,7 @@ public class ViewMatchesActivity extends Activity {
             textView2.setText(user_id);
 
             ConnectionTask task  = new ConnectionTask();
-            task.execute(new String[]{"http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com"});
+            task.execute(new String[]{"http://ec2-52-10-172-62.us-west-2.compute.amazonaws.com"});
 
         }
     }
@@ -64,7 +64,7 @@ public class ViewMatchesActivity extends Activity {
             //create HTTP client
             DefaultHttpClient httpClient = new DefaultHttpClient();
 
-            String link = "http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com";
+            String link = "http://ec2-52-10-172-62.us-west-2.compute.amazonaws.com";
 
             //create HTTP post
             HttpPost httpPostReq = new HttpPost(link);

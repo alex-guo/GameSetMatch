@@ -38,7 +38,7 @@ public class WaitGameActivity extends ActionBarActivity {
     String user_id;
     Profile currentProfile;
 
-    private String[] server = new String[]{"http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com"};
+    private String[] server = new String[]{"http://ec2-52-10-172-62.us-west-2.compute.amazonaws.com"};
 
 
     @Override
@@ -111,7 +111,7 @@ public class WaitGameActivity extends ActionBarActivity {
             //create HTTP client
             DefaultHttpClient httpClient = new DefaultHttpClient();
 
-            String link = "http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com";
+            String link = "http://ec2-52-10-172-62.us-west-2.compute.amazonaws.com";
 
             //create HTTP post
             HttpPost httpPostReq = new HttpPost(link);
@@ -173,7 +173,7 @@ public class WaitGameActivity extends ActionBarActivity {
             //create HTTP client
             DefaultHttpClient httpClient = new DefaultHttpClient();
 
-            String link = "http://ec2-52-25-127-194.us-west-2.compute.amazonaws.com";
+            String link = "http://ec2-52-10-172-62.us-west-2.compute.amazonaws.com";
 
             //create HTTP post
             HttpPost httpPostReq = new HttpPost(link);

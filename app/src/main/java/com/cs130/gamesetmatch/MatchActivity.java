@@ -14,6 +14,8 @@ import com.facebook.Profile;
 
 public class MatchActivity extends Activity {
     private Profile currentProfile;
+    private String user_id;
+    private String session_key;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +24,8 @@ public class MatchActivity extends Activity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
+            user_id = (String)extras.get("user_id");
+            session_key = (String)extras.get("session_key");
             currentProfile = (Profile) extras.get("currentProfile");
             Button dashButton = (Button) findViewById(R.id.backToDash_button);
 
@@ -31,6 +35,8 @@ public class MatchActivity extends Activity {
                     Intent intent = new Intent(MatchActivity.this, DashboardActivity.class);
                     intent.putExtra("currentProfile", currentProfile);
                     intent.putExtra("haveID", "true");
+                    intent.putExtra("user_id", user_id);
+                    intent.putExtra("session_key", session_key);
                     startActivity(intent);
                 }
             });
