@@ -48,7 +48,7 @@
             android:layout_toLeftOf="@+id/sendButton"
             android:ems="10"
             android:gravity="top"
-            android:hint="@string/enterMessageHere"
+            android:hint="Enter Message Here"
             android:minHeight="50dp"
             android:inputType="textMultiLine"
             android:lines="3"

@@ -66,8 +66,8 @@ public class ChatActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     Log.d("onSendButtonClicked", messageBox.getText().toString());
-                    StoreMessageTask smTask = new StoreMessageTask();
-                    smTask.execute(server);
+                    //StoreMessageTask smTask = new StoreMessageTask();
+                    //smTask.execute(server);
 
                     messageList.add(createMessage(currentProfile.getFirstName(), target_user_id, messageBox.getText().toString()));
                     simpleAdpt.notifyDataSetChanged();
@@ -90,7 +90,10 @@ public class ChatActivity extends Activity {
             //task.execute(server);
 
             messageListView = (ListView) findViewById(R.id.chat);
-
+            messageList.add(createMessage("Christopher", user_id, "Hey! How's it going? :)"));
+            messageList.add(createMessage("Christopher", user_id, "Can I follow you home?"));
+            messageList.add(createMessage("Christopher", user_id, "Cause my parents always told me to follow my dreams."));
+            messageList.add(createMessage("Christopher", user_id, "LOL :)"));
             simpleAdpt = new SimpleAdapter(this, messageList, android.R.layout.simple_list_item_1, new String[] {"message"}, new int[] {android.R.id.text1});
             messageListView.setAdapter(simpleAdpt);
 

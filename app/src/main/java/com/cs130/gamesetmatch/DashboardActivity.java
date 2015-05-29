@@ -120,6 +120,7 @@ public class DashboardActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(DashboardActivity.this, ViewMatchesActivity.class);
+                    intent.putExtra("currentProfile", currentProfile);
                     intent.putExtra("user_id", user_id);
                     intent.putExtra("session_key", session_key);
                     startActivity(intent);

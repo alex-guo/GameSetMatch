@@ -1,9 +1,13 @@
 package com.cs130.gamesetmatch;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.facebook.Profile;
@@ -32,6 +36,8 @@ public class ViewMatchesActivity extends Activity {
     //private TextView textView3;
     private String session_key = null;
     private String user_id = null;
+    private ListView matchesListView;
+    private Profile currentProfile = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +50,25 @@ public class ViewMatchesActivity extends Activity {
 
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
-            Profile currentProfile = (Profile) extras.get("currentProfile");
+            currentProfile = (Profile) extras.get("currentProfile");
             session_key = (String) extras.get("session_key");
             user_id = (String) extras.get("user_id");
+
             //textView1.setText(session_key);
             //textView2.setText(user_id);
+            matchesListView = (ListView) findViewById(R.id.listView);
+            matchesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    String target_user_id = (String) matchesListView.getItemAtPosition(position);
+                    Intent intent = new Intent (ViewMatchesActivity.this, ChatActivity.class);
+                    intent.putExtra("currentProfile", currentProfile);
+                    intent.putExtra("user_id", user_id);
+                    intent.putExtra("target_user_id", "az8qlZ1x");
+                    startActivity(intent);
+
+                }
+            });
 
             ConnectionTask task  = new ConnectionTask();
             task.execute(new String[]{"http://ec2-52-10-172-62.us-west-2.compute.amazonaws.com"});
